@@ -41,14 +41,11 @@ io.on('connection', function(socket)
             break;
         }
     }
+    console.log(`Player ${playerIndex} has connected`);
 
     //Tell the connecting client what player number they are
     socket.emit('player-number', playerIndex);
-    console.log(`Player ${playerIndex} has connected`);
-
-    //Ignore player 3
-    if (playerIndex === -1) return;
-
+    
     if (connections[0] != null && connections[1] != null)
     {
         //Start the game

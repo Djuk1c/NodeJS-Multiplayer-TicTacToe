@@ -1,1 +1,3 @@
 Access connections array from game.js
+dont let playerindex -1 clear table, start game, add x/o
+clear table on connect

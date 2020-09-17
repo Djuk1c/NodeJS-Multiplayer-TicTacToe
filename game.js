@@ -67,15 +67,18 @@ function Game()
                 if (filledX.includes(cellId) || filledO.includes(cellId))
                     return;
 
+                if (playerNum < 0 || playerNum > 1)
+                    return;
+
                 // If Player is X and the cell is empty
-                if (playerNum == 0 && xTurn && !filledX.includes(cellId) && !filledO.includes(cellId))
+                if (playerNum === 0 && xTurn && !filledX.includes(cellId) && !filledO.includes(cellId))
                 {
                     filledX.push(parseInt(cellId));
                     xTurn = false;
                     io.emit('fill-cell', cellId, playerNum);
                 }
                 // If Player is O and the cell is empty
-                else if (playerNum == 1 && !xTurn && !filledX.includes(cellId) && !filledO.includes(cellId))
+                else if (playerNum === 1 && !xTurn && !filledX.includes(cellId) && !filledO.includes(cellId))
                 {
                     filledO.push(parseInt(cellId));
                     xTurn = true;
@@ -97,12 +100,16 @@ function Game()
                     end();
                     gameLive = true;
                 }
+
+                socket.on('disconnect', function()
+                {
+                    if (playerNum == 1 || playerNum == 0)
+                    {
+                        end();
+                        io.emit('clear-table');
+                    }
+                })
             });
-            socket.on('disconnect', function()
-            {
-                end();
-                io.emit('clear-table');
-            })
         })
     }
 }

@@ -2,6 +2,10 @@
 const turnDiv = document.querySelector('.status');
 const cellDivs = document.querySelectorAll('.game-cell');
 const statusText = document.getElementById('status-text');
+const resetButton = document.getElementById('reset-button');
+
+//resetButton.addEventListener('click', handleResetClick);
+
 
 //Variables
 let playerNum = 0;
@@ -13,15 +17,13 @@ const socket = io();
 socket.on('player-number', num =>
 {
     symbols = {0 : "X",1 : "O"}
-    if (num === -1)
-    {
-        turnDiv.innerHTML = "Table is full.";
-    }
-    else
-    {
-        playerNum = parseInt(num);
-    }
+    playerNum = parseInt(num);
+    console.log(num);
     turnDiv.innerHTML = `You are ${symbols[playerNum]}`;
+    if (parseInt(num) === -1)
+    {
+        turnDiv.innerHTML = "Room is full.";
+    }
 })
 
 socket.on('player-connected-disconnected', str =>
@@ -57,11 +59,24 @@ socket.on('clear-table', function()
 //Event Handlers
 function handleCellClick(e)
 {
-    cellId = e.target.classList[1];
-    socket.emit('cell-click', cellId, playerNum);
-    console.log(`Clicked on ID ${cellId}`);
+    if (playerNum == 0 || playerNum == 1)
+    {
+        cellId = e.target.classList[1];
+        socket.emit('cell-click', cellId, playerNum);
+        console.log(`Clicked on ID ${cellId}`);
+    }
 }
-
+/*
+function handleResetClick(e)
+{
+    if (playerNum == 0 || playerNum == 1)
+    {
+        clearTable();
+        socket.emit('reset-click');
+        //Not working, will fix maybe one day idk probably not
+    }
+}
+*/
 //Functions
 function clearTable()
 {
@@ -72,8 +87,9 @@ function clearTable()
     }
 }
 
+//Event Adders
 for (i = 0; i < cellDivs.length; i++)
 {
-    cellDivs[i].addEventListener('click', handleCellClick)
+    cellDivs[i].addEventListener('click', handleCellClick);
     cellDivs[i].classList.add(i);
 }
