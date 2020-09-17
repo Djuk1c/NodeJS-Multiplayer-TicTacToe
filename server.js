@@ -4,7 +4,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const path = require('path');
 const { connect } = require('http2');
-const PORT = process.env.port || 8080;
+const PORT = process.env.PORT || 8080;
 
 var Game = require('./game.js');
 let game = new Game;
