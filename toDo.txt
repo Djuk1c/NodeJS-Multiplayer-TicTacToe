@@ -1,0 +1,4 @@
+Enter username.
+Save that username somewhere on server.
+Make/join lobby.
+Play.
