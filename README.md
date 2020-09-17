@@ -12,7 +12,7 @@
 * game.js - core game features
 
 ## Links
-* Live - {placeholder}
+* Live - https://seksiksoks.herokuapp.com/
 
 ## Instalation
 * Run node server.js
