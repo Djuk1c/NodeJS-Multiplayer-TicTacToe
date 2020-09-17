@@ -13,7 +13,6 @@ let game = new Game;
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-require('./game')(io);
 
 //Setting static files folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,7 +24,9 @@ server.listen(PORT, () =>
 });
 
 //Handle socket connections
-const connections = [null, null];
+let connections = [null, null];
+
+require('./game')(io);
 
 io.on('connection', function(socket)
 {
@@ -48,7 +49,7 @@ io.on('connection', function(socket)
     //Ignore player 3
     if (playerIndex === -1) return;
 
-    if (connections[0] && connections[1] != null)
+    if (connections[0] != null && connections[1] != null)
     {
         //Start the game
         game.start();

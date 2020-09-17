@@ -59,7 +59,7 @@ function Game()
             {
                 if (filledX.includes(cellId) || filledO.includes(cellId))
                     return;
-                    
+
                 // If Player is X and the cell is empty
                 if (playerNum == 0 && xTurn && !filledX.includes(cellId) && !filledO.includes(cellId))
                 {
