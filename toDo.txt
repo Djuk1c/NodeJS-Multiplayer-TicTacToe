@@ -1,2 +1,1 @@
-Red Highlight where X/O won.
 Access connections array from game.js

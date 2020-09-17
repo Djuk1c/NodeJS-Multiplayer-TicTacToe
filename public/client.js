@@ -42,6 +42,13 @@ socket.on('fill-cell', (cellId, playerNum) =>
     }
 });
 
+socket.on('highlight-cells', (cellAray, color) =>
+{
+    cellDivs[cellAray[0]].style.backgroundColor = color;
+    cellDivs[cellAray[1]].style.backgroundColor = color;
+    cellDivs[cellAray[2]].style.backgroundColor = color;
+})
+
 socket.on('clear-table', function()
 {
     clearTable();

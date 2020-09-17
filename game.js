@@ -1,3 +1,6 @@
+const { promisify } = require('util')
+const sleep = promisify(setTimeout)
+
 function Game()
 {
     const winningCombinations = [
@@ -32,6 +35,7 @@ function Game()
 
     function checkForWinner()
     {
+        let winningCells = [];
         winningCombinations.forEach(winningCombos => 
         {
             let cell1 = winningCombos[0];
@@ -41,13 +45,16 @@ function Game()
             {
                 console.log('x won');
                 gameLive = false;
+                winningCells = [cell1, cell2, cell3];
             }
             else if (filledO.includes(cell1) && filledO.includes(cell2) && filledO.includes(cell3))
             {
                 console.log('o won');
                 gameLive = false;
+                winningCells = [cell1, cell2, cell3];
             }
         })
+        return winningCells;
     }
 
     module.exports = function(io)
@@ -78,7 +85,15 @@ function Game()
                 checkForWinner()
                 if (!gameLive)
                 {
-                    io.emit('clear-table');
+                    //Hightlight cells and pause for 2 seconds
+                    let array = checkForWinner();
+                    io.emit('highlight-cells', array, "#e6496b");
+                    sleep(1000).then(() => 
+                    {
+                        io.emit('clear-table');
+                        io.emit('highlight-cells', array, "#ea728c");
+                    })
+                    console.log('test');
                     end();
                     gameLive = true;
                 }
