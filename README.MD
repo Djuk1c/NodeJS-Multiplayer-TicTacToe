@@ -12,7 +12,7 @@
 * game.js - core game features
 
 ## Links
-* Live - https://seksiksoks.herokuapp.com/
+* Live - https://djukic-tictactoe.herokuapp.com/
 
 ## Instalation
 * Run node server.js
